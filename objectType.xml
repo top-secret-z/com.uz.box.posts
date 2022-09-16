@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<data xmlns="http://www.woltlab.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.woltlab.com http://www.woltlab.com/XSD/2019/objectType.xsd">
+	<import>
+		<!-- box controller -->
+		<type>
+			<name>com.uz.box.posts</name>
+			<definitionname>com.woltlab.wcf.boxController</definitionname>
+			<classname>wbb\system\box\UzBoxPostsBoxController</classname>
+		</type>
+		
+		<!-- box controller conditions -->
+		<type>
+			<name>com.uz.box.posts.board</name>
+			<definitionname>com.uz.box.posts.condition</definitionname>
+			<classname>wbb\system\condition\thread\ThreadBoardCondition</classname>
+		</type>
+		<type>
+			<name>com.uz.wbb.box.top.board.count</name>
+			<definitionname>com.uz.box.posts.condition</definitionname>
+			<classname>wbb\system\condition\UzBoxPostsCountCondition</classname>
+		</type>
+		
+		<type>
+			<name>com.uz.box.posts.state</name>
+			<definitionname>com.uz.box.posts.condition</definitionname>
+			<classname>wbb\system\condition\post\PostStateCondition</classname>
+		</type>
+		
+		<type>
+			<name>com.uz.box.posts.period</name>
+			<definitionname>com.uz.box.posts.condition</definitionname>
+			<classname>wbb\system\condition\UzBoxPostsPeriodCondition</classname>
+		</type>
+		<type>
+			<name>com.uz.box.posts.period.value</name>
+			<definitionname>com.uz.box.posts.condition</definitionname>
+			<classname>wbb\system\condition\UzBoxPostsPeriodValueCondition</classname>
+		</type>
+		
+		<type>
+			<name>com.uz.box.posts.last</name>
+			<definitionname>com.uz.box.posts.condition</definitionname>
+			<classname>wbb\system\condition\UzBoxPostsLastCondition</classname>
+		</type>
+		
+		<type>
+			<name>com.uz.box.posts.lastActivity</name>
+			<definitionname>com.uz.box.posts.condition</definitionname>
+			<classname>wbb\system\condition\UzBoxPostsLastActivityCondition</classname>
+		</type>
+ 		<type>
+			<name>com.uz.box.posts.userState</name>
+			<definitionname>com.uz.box.posts.condition</definitionname>
+			<classname>wcf\system\condition\UserStateCondition</classname>
+		</type>
+		<type>
+			<name>com.uz.box.posts.groups</name>
+			<definitionname>com.uz.box.posts.condition</definitionname>
+			<classname>wcf\system\condition\UserGroupCondition</classname>
+		</type>
+	</import>
+</data>
