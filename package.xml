@@ -34,16 +34,22 @@
         <instruction type="box" />
     </instructions>
 
-    <instructions type="update" fromversion="5.3.0">
+    <instructions type="update" fromversion="5.3.*">
         <instruction type="file" application="wbb" />
-    </instructions>
-
-    <instructions type="update" fromversion="5.3.1">
-        <instruction type="file" application="wbb" />
+        <instruction type="language" />
+        <instruction type="template" application="wbb" />
+        <instruction type="objectTypeDefinition" />
+        <instruction type="objectType" />
+        <instruction type="box" />
     </instructions>
 
     <instructions type="update" fromversion="5.4.0">
         <instruction type="file" application="wbb" />
+        <instruction type="language" />
+        <instruction type="template" application="wbb" />
+        <instruction type="objectTypeDefinition" />
+        <instruction type="objectType" />
+        <instruction type="box" />
     </instructions>
 
     <instructions type="update" fromversion="5.4.1">
