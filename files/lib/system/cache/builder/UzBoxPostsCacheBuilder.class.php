@@ -20,6 +20,7 @@
  * along with this program; if not, write to the Free Software Foundation,
  * Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
+
 namespace wbb\system\cache\builder;
 
 use wbb\data\board\BoardList;
@@ -27,7 +28,10 @@ use wcf\data\user\User;
 use wcf\data\user\UserProfile;
 use wcf\system\cache\builder\AbstractCacheBuilder;
 use wcf\system\cache\runtime\UserProfileRuntimeCache;
+use wcf\system\database\exception\DatabaseQueryException;
+use wcf\system\database\exception\DatabaseQueryExecutionException;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
+use wcf\system\exception\SystemException;
 use wcf\system\WCF;
 
 /**
@@ -42,8 +46,12 @@ class UzBoxPostsCacheBuilder extends AbstractCacheBuilder
 
     /**
      * @inheritDoc
+     *
+     * @throws DatabaseQueryExecutionException
+     * @throws DatabaseQueryException
+     * @throws SystemException
      */
-    protected function rebuild(array $parameters)
+    protected function rebuild(array $parameters): array
     {
         /**
          * preset data
@@ -63,7 +71,7 @@ class UzBoxPostsCacheBuilder extends AbstractCacheBuilder
             }
 
             if (isset($condition['uzboxPostsPeriodValue'])) {
-                $value = \intval($condition['uzboxPostsPeriodValue']);
+                $value = (int)$condition['uzboxPostsPeriodValue'];
             }
 
             if (isset($condition['uzboxPostsLast'])) {
@@ -108,10 +116,11 @@ class UzBoxPostsCacheBuilder extends AbstractCacheBuilder
             }
 
             if (isset($condition['userIsEnabled'])) {
-                if ($condition['userIsEnabled'] == 0) {
+                if ((int)$condition['userIsEnabled'] === 0) {
                     $conditionBuilder->add('user_table.activationCode > ?', [0]);
                 }
-                if ($condition['userIsEnabled'] == 1) {
+
+                if ((int)$condition['userIsEnabled'] === 1) {
                     $conditionBuilder->add('user_table.activationCode = ?', [0]);
                 }
             }
@@ -128,9 +137,11 @@ class UzBoxPostsCacheBuilder extends AbstractCacheBuilder
         // period
         $start = $start2 = -1;
         $end = TIME_NOW;
+
         switch ($period) {
             case 'curday':
                 $start = \strtotime("midnight", TIME_NOW) - ($value - 1) * 86400;
+
                 if ($start < 0) {
                     $start = 0;
                 }
@@ -139,122 +150,155 @@ class UzBoxPostsCacheBuilder extends AbstractCacheBuilder
                 if ($start2 < 0) {
                     $start2 = 0;
                 }
+
                 break;
 
             case 'curweek':
-                $start = \gmmktime(0, 0, 0, \date("n"), \date("j") - \date("N") + 1); // Monday
+                $start = \strtotime("monday this week");
                 $start -= ($value - 1) * 86400 * 7;
+
                 if ($start < 0) {
                     $start = 0;
                 }
 
                 $start2 = $start - $value * 86400 * 7;
+
                 if ($start2 < 0) {
                     $start2 = 0;
                 }
+
                 break;
 
             case 'curmonth':
                 $month = \date('n');
                 $year = \date('Y');
                 $savedValue = $value;
+
                 while ($value > 1) {
                     $month--;
-                    if ($month == 0) {
+
+                    if ((int)$month === 0) {
                         $month = 12;
                         $year--;
                     }
+
                     $value--;
                 }
+
                 if ($year < 1970) {
                     $year = 1970;
                 }
-                $start = \gmmktime(0, 0, 1, $month, 1, $year);
+
+                $start = \strtotime("{$year}-{$month}-01 00:00:01");
 
                 while ($savedValue > 0) {
                     $month--;
-                    if ($month == 0) {
+
+                    if ((int)$month === 0) {
                         $month = 12;
                         $year--;
                     }
+
                     $savedValue--;
                 }
+
                 if ($year < 1970) {
                     $year = 1970;
                 }
-                $start2 = \gmmktime(0, 0, 1, $month, 1, $year);
+
+                $start2 = \strtotime("{$year}-{$month}-01 00:00:01");
+
                 break;
 
             case 'curyear':
                 $year = \date('Y') - ($value - 1);
+
                 if ($year < 1970) {
                     $year = 1970;
                 }
-                $start = \gmmktime(0, 0, 1, 1, 1, $year);
+
+                $start = \strtotime("{$year}-01-01 00:00:01");
 
                 $year -= $value;
+
                 if ($year < 1970) {
                     $year = 1970;
                 }
-                $start2 = \gmmktime(0, 0, 1, 1, 1, $year);
+
+                $start2 = \strtotime("{$year}-01-01 00:00:01");
+
                 break;
 
             case 'day':
                 $start = TIME_NOW - $value * 86400;
+
                 if ($start < 0) {
                     $start = 0;
                 }
 
                 $start2 = $start - $value * 86400;
+
                 if ($start2 < 0) {
                     $start2 = 0;
                 }
+
                 break;
 
             case 'week':
                 $start = TIME_NOW - $value * 86400 * 7;
+
                 if ($start < 0) {
                     $start = 0;
                 }
 
                 $start2 = $start - $value * 86400 * 7;
+
                 if ($start2 < 0) {
                     $start2 = 0;
                 }
+
                 break;
 
             case 'month':
                 if ($value > 500) {
                     $value = 500;
                 }
+
                 $string = '-' . $value . ' month';
                 $start = \strtotime($string, $end);
 
                 $value = 2 * $value;
+
                 if ($value > 500) {
                     $value = 500;
                 }
+
                 $string = '-' . $value . ' month';
                 $start2 = \strtotime($string, $start);
+
                 break;
 
             case 'year':
                 if ($value > 47) {
                     $value = 47;
                 }
+
                 $string = '-' . $value . ' year';
                 $start = \strtotime($string, $end);
 
                 $value = 2 * $value;
+
                 if ($value > 47) {
                     $value = 47;
                 }
+
                 $string = '-' . $value . ' month';
                 $start2 = \strtotime($string, $start);
+
                 break;
         }
 
-        // clone conditionbuilder
+        // clone condition builder
         $conditionBuilderClone = clone $conditionBuilder;
 
         if ($start > -1) {
@@ -263,33 +307,39 @@ class UzBoxPostsCacheBuilder extends AbstractCacheBuilder
 
         // get userIDs and posts
         $userIDs = $userToPost = [];
-        $sql = "SELECT        post_table.userID as postUserID, COUNT(post_table.userID) as uzboxPosts
-                FROM        wcf" . WCF_N . "_user user_table
-                LEFT JOIN    wbb" . WCF_N . "_post as post_table ON (post_table.userID = user_table.userID)
+        $sql = "SELECT post_table.userID as postUserID, COUNT(post_table.userID) as uzboxPosts
+                FROM wcf1_user user_table
+                LEFT JOIN wbb1_post as post_table ON (post_table.userID = user_table.userID)
                 " . $conditionBuilder . "
                 GROUP BY postUserID
                 ORDER BY uzboxPosts DESC";
 
-        $statement = WCF::getDB()->prepareStatement($sql, $sqlLimit);
+        $statement = WCF::getDB()->prepare($sql, $sqlLimit);
         $statement->execute($conditionBuilder->getParameters());
+
         while ($row = $statement->fetchArray()) {
             $userIDs[] = $row['postUserID'];
             $userToPost[$row['postUserID']] = $row['uzboxPosts'];
         }
 
         $users = [];
+
         if (!empty($userIDs)) {
             foreach ($userIDs as $userID) {
                 $user = UserProfileRuntimeCache::getInstance()->getObject($userID);
-                $users[] = [
-                    'user' => $user,
-                    'posts' => $userToPost[$user->userID],
-                ];
+
+                if (null !== $user) {
+                    $users[] = [
+                        'user' => $user,
+                        'posts' => $userToPost[$user->userID],
+                    ];
+                }
             }
         }
 
         // last
         $lasts = [];
+
         if ($uzboxPostsLast) {
             $conditionBuilder = $conditionBuilderClone;
 
@@ -298,15 +348,16 @@ class UzBoxPostsCacheBuilder extends AbstractCacheBuilder
             }
 
             $userIDs = $userToPost = [];
-            $sql = "SELECT        post_table.userID as postUserID, COUNT(post_table.userID) as uzboxPosts
-                    FROM        wcf" . WCF_N . "_user user_table
-                    LEFT JOIN    wbb" . WCF_N . "_post as post_table ON (post_table.userID = user_table.userID)
+            $sql = "SELECT post_table.userID as postUserID, COUNT(post_table.userID) as uzboxPosts
+                    FROM wcf1_user user_table
+                    LEFT JOIN wbb1_post as post_table ON (post_table.userID = user_table.userID)
                     " . $conditionBuilder . "
                     GROUP BY postUserID
                     ORDER BY uzboxPosts DESC";
 
-            $statement = WCF::getDB()->prepareStatement($sql, $uzboxPostsLast);
+            $statement = WCF::getDB()->prepare($sql, $uzboxPostsLast);
             $statement->execute($conditionBuilder->getParameters());
+
             while ($row = $statement->fetchArray()) {
                 $userIDs[] = $row['postUserID'];
                 $userToPost[$row['postUserID']] = $row['uzboxPosts'];
@@ -315,6 +366,7 @@ class UzBoxPostsCacheBuilder extends AbstractCacheBuilder
             if (!empty($userIDs)) {
                 foreach ($userIDs as $userID) {
                     $user = new UserProfile(new User($userID));
+
                     $lasts[] = [
                         'user' => $user,
                         'posts' => $userToPost[$user->userID],

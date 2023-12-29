@@ -20,6 +20,7 @@
  * along with this program; if not, write to the Free Software Foundation,
  * Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
+
 namespace wbb\system\condition;
 
 use InvalidArgumentException;
@@ -46,10 +47,13 @@ class UzBoxPostsCountCondition extends AbstractCheckboxCondition implements IObj
     /**
      * @inheritDoc
      */
-    public function addObjectListCondition(DatabaseObjectList $objectList, array $conditionData)
+    public function addObjectListCondition(DatabaseObjectList $objectList, array $conditionData): void
     {
         if (!($objectList instanceof UserList)) {
-            throw new InvalidArgumentException("Object list is no instance of '" . UserList::class . "', instance of '" . \get_class($objectList) . "' given.");
+            throw new InvalidArgumentException(
+                "Object list is no instance of '" . UserList::class . "', "
+                . "instance of '" . \get_class($objectList) . "' given."
+            );
         }
 
         // do nothing

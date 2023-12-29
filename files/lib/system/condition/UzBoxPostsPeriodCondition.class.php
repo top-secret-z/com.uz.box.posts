@@ -20,6 +20,7 @@
  * along with this program; if not, write to the Free Software Foundation,
  * Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
+
 namespace wbb\system\condition;
 
 use InvalidArgumentException;
@@ -57,10 +58,13 @@ class UzBoxPostsPeriodCondition extends AbstractSelectCondition implements IObje
     /**
      * @inheritDoc
      */
-    public function addObjectListCondition(DatabaseObjectList $objectList, array $conditionData)
+    public function addObjectListCondition(DatabaseObjectList $objectList, array $conditionData): void
     {
         if (!($objectList instanceof UserProfileList)) {
-            throw new InvalidArgumentException("Object list is no instance of '" . UserProfileList::class . "', instance of '" . \get_class($objectList) . "' given.");
+            throw new InvalidArgumentException(
+                "Object list is no instance of '" . UserProfileList::class . "', "
+                . "instance of '" . \get_class($objectList) . "' given."
+            );
         }
 
         // do nothing
@@ -69,7 +73,7 @@ class UzBoxPostsPeriodCondition extends AbstractSelectCondition implements IObje
     /**
      * @inheritDoc
      */
-    protected function getOptions()
+    protected function getOptions(): array
     {
         return [
             'alltime' => 'wcf.acp.box.uzposts.condition.period.alltime',
@@ -87,7 +91,7 @@ class UzBoxPostsPeriodCondition extends AbstractSelectCondition implements IObje
     /**
      * @inheritDoc
      */
-    public function readFormParameters()
+    public function readFormParameters(): void
     {
         if (isset($_POST[$this->fieldName])) {
             $this->fieldValue = StringUtil::trim($_POST[$this->fieldName]);

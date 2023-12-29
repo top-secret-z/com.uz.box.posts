@@ -20,11 +20,13 @@
  * along with this program; if not, write to the Free Software Foundation,
  * Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
+
 namespace wbb\system\box;
 
 use wbb\system\cache\builder\UzBoxPostsCacheBuilder;
 use wcf\system\box\AbstractDatabaseObjectListBoxController;
 use wcf\system\event\EventHandler;
+use wcf\system\exception\SystemException;
 use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
 
@@ -53,14 +55,16 @@ class UzBoxPostsBoxController extends AbstractDatabaseObjectListBoxController
     /**
      * data
      */
-    protected $lasts = [];
+    protected array $lasts = [];
 
     /**
      * @inheritDoc
+     *
+     * @throws SystemException
      */
     public function getLink(): string
     {
-        if (MODULE_MEMBERS_LIST) {
+        if ($this->hasLink()) {
             $parameters = 'sortField=wbbPosts&sortOrder=DESC';
 
             return LinkHandler::getInstance()->getLink('MembersList', [], $parameters);
@@ -71,14 +75,18 @@ class UzBoxPostsBoxController extends AbstractDatabaseObjectListBoxController
 
     /**
      * @inheritDoc
+     *
+     * @throws SystemException
      */
     protected function getObjectList()
     {
         // get conditions as parameters for cache builder
         $parameters = [];
+
         foreach ($this->box->getControllerConditions() as $condition) {
             $parameters[] = $condition->conditionData;
         }
+
         $parameters[] = ['limit' => $this->limit];
 
         $temp = UzBoxPostsCacheBuilder::getInstance()->getData($parameters);
@@ -91,7 +99,7 @@ class UzBoxPostsBoxController extends AbstractDatabaseObjectListBoxController
     /**
      * @inheritDoc
      */
-    protected function getTemplate()
+    protected function getTemplate(): string
     {
         return WCF::getTPL()->fetch('boxUzPosts', 'wbb', [
             'boxUserList' => $this->objectList,
@@ -101,8 +109,9 @@ class UzBoxPostsBoxController extends AbstractDatabaseObjectListBoxController
 
     /**
      * @inheritDoc
+     * @throws SystemException
      */
-    public function hasContent()
+    public function hasContent(): bool
     {
         // module
         if (!MODULE_LIKE) {
@@ -122,7 +131,7 @@ class UzBoxPostsBoxController extends AbstractDatabaseObjectListBoxController
     /**
      * @inheritDoc
      */
-    protected function loadContent()
+    protected function loadContent(): void
     {
         $this->content = $this->getTemplate();
     }
@@ -130,8 +139,8 @@ class UzBoxPostsBoxController extends AbstractDatabaseObjectListBoxController
     /**
      * @inheritDoc
      */
-    public function hasLink()
+    public function hasLink(): bool
     {
-        return MODULE_MEMBERS_LIST == 1;
+        return MODULE_MEMBERS_LIST === 1 && WCF::getSession()->getPermission('user.profile.canViewMembersList');
     }
 }
