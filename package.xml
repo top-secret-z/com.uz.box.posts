@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<package name="de.softcreatr.box.posts" xmlns="http://www.woltlab.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.woltlab.com https://www.woltlab.com/XSD/2019/package.xsd">
+<package name="de.softcreatr.box.posts" xmlns="http://www.woltlab.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.woltlab.com https://www.woltlab.com/XSD/6.0/package.xsd">
     <packageinformation>
         <packagename>Box “Members with the most Posts”</packagename>
-        <packagedescription>Provides an additional system box for configurably displaying the members with the most posts.</packagedescription>
+        <packagedescription>Adds a system box for the configurable display of the members with the most posts.</packagedescription>
         <packagename language="de">Box „Mitglieder mit den meisten Beiträgen“</packagename>
         <packagedescription language="de">Ergänzt eine System-Box zur konfigurierbaren Anzeige der Mitglieder mit den meisten Beiträgen.</packagedescription>
-        <version>5.5.0</version>
-        <date>2023-10-23</date>
+        <version>6.0.0</version>
+        <date>2023-12-29</date>
         <license><![CDATA[LGPL <https://opensource.org/licenses/lgpl-license.php>]]></license>
     </packageinformation>
 
@@ -16,12 +16,12 @@
     </authorinformation>
 
     <requiredpackages>
-        <requiredpackage minversion="5.5.18">com.woltlab.wcf</requiredpackage>
-        <requiredpackage minversion="5.5.16">com.woltlab.wbb</requiredpackage>
+        <requiredpackage minversion="5.5.19">com.woltlab.wcf</requiredpackage>
+        <requiredpackage minversion="5.5.19">com.woltlab.wbb</requiredpackage>
     </requiredpackages>
 
     <excludedpackages>
-        <excludedpackage version="6.0.0 Alpha 1">com.woltlab.wcf</excludedpackage>
+        <excludedpackage version="6.1.0 Alpha 1">com.woltlab.wcf</excludedpackage>
         <excludedpackage version="*">com.uz.box.posts</excludedpackage>
     </excludedpackages>
 
@@ -34,16 +34,7 @@
         <instruction type="box" />
     </instructions>
 
-    <instructions type="update" fromversion="5.3.*">
-        <instruction type="file" application="wbb" />
-        <instruction type="language" />
-        <instruction type="template" application="wbb" />
-        <instruction type="objectTypeDefinition" />
-        <instruction type="objectType" />
-        <instruction type="box" />
-    </instructions>
-
-    <instructions type="update" fromversion="5.4.*">
+    <instructions type="update" fromversion="*">
         <instruction type="file" application="wbb" />
         <instruction type="language" />
         <instruction type="template" application="wbb" />

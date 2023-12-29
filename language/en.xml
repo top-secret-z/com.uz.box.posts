@@ -1,33 +1,35 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<language xmlns="http://www.woltlab.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.woltlab.com http://www.woltlab.com/XSD/2019/language.xsd" languagecode="en" languagename="English" countrycode="gb">
-    <category name="wcf.acp.box">
-        <item name="wcf.acp.box.boxController.com.uz.box.posts"><![CDATA[Members with the most Posts (X)]]></item>
-
-        <item name="wcf.acp.box.uzposts.condition.board.count"><![CDATA[Only boards, which users’ posts are counted]]></item>
-        <item name="wcf.acp.box.uzposts.condition.last"><![CDATA[Members last Period]]></item>
-        <item name="wcf.acp.box.uzposts.condition.last.description"><![CDATA[Select the number of members to be displayed for the last period. Entrer “0” to not show members.]]></item>
-        <item name="wcf.acp.box.uzposts.condition.lastActivity"><![CDATA[Last activity]]></item>
-        <item name="wcf.acp.box.uzposts.condition.lastActivity.description"><![CDATA[Users must have been active within the last number of days.]]></item>
-
-        <item name="wcf.acp.box.uzposts.condition.period"><![CDATA[Period]]></item>
-        <item name="wcf.acp.box.uzposts.condition.period.description"><![CDATA[Enter the period for the posts here. You can extend the selected period by entering a factor in the next input field.]]></item>
-        <item name="wcf.acp.box.uzposts.condition.period.value"><![CDATA[Factor for Period]]></item>
-        <item name="wcf.acp.box.uzposts.condition.period.value.description"><![CDATA[Factor to extend the period selected above. Only values greater than 0 will be regarded. Too large values will be reduced internally. Example:<br>“Actual Week” and “4” result in a period of 4 weeks.]]></item>
-
-        <item name="wcf.acp.box.uzposts.condition.period.alltime"><![CDATA[Without Limit]]></item>
-        <item name="wcf.acp.box.uzposts.condition.period.curday"><![CDATA[Actual Day]]></item>
-        <item name="wcf.acp.box.uzposts.condition.period.curweek"><![CDATA[Actual Week]]></item>
-        <item name="wcf.acp.box.uzposts.condition.period.curmonth"><![CDATA[Actual Month]]></item>
-        <item name="wcf.acp.box.uzposts.condition.period.curyear"><![CDATA[Actual Year]]></item>
-        <item name="wcf.acp.box.uzposts.condition.period.day"><![CDATA[Last Day]]></item>
-        <item name="wcf.acp.box.uzposts.condition.period.week"><![CDATA[Last Week]]></item>
-        <item name="wcf.acp.box.uzposts.condition.period.month"><![CDATA[Last Month]]></item>
-        <item name="wcf.acp.box.uzposts.condition.period.year"><![CDATA[Last Year]]></item>
-
-    </category>
-
-    <category name="wcf.user">
-        <item name="wcf.user.uzboxPosts.last"><![CDATA[Last Period]]></item>
-        <item name="wcf.user.uzboxPosts.posts"><![CDATA[{#$boxUser->uzboxPosts} Post{if $boxUser->uzboxPosts != 1}s{/if}]]></item>
-    </category>
+<language xmlns="http://www.woltlab.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.woltlab.com https://www.woltlab.com/XSD/6.0/language.xsd" languagecode="en" languagename="English" countrycode="gb">
+    <import>
+        <category name="wcf.acp.box">
+            <item name="wcf.acp.box.boxController.com.uz.box.posts"><![CDATA[Members with the most Posts (X)]]></item>
+    
+            <item name="wcf.acp.box.uzposts.condition.board.count"><![CDATA[Only boards, which users’ posts are counted]]></item>
+            <item name="wcf.acp.box.uzposts.condition.last"><![CDATA[Members last Period]]></item>
+            <item name="wcf.acp.box.uzposts.condition.last.description"><![CDATA[Select the number of members to be displayed for the last period. Entrer “0” to not show members.]]></item>
+            <item name="wcf.acp.box.uzposts.condition.lastActivity"><![CDATA[Last activity]]></item>
+            <item name="wcf.acp.box.uzposts.condition.lastActivity.description"><![CDATA[Users must have been active within the last number of days.]]></item>
+    
+            <item name="wcf.acp.box.uzposts.condition.period"><![CDATA[Period]]></item>
+            <item name="wcf.acp.box.uzposts.condition.period.description"><![CDATA[Enter the period for the posts here. You can extend the selected period by entering a factor in the next input field.]]></item>
+            <item name="wcf.acp.box.uzposts.condition.period.value"><![CDATA[Factor for Period]]></item>
+            <item name="wcf.acp.box.uzposts.condition.period.value.description"><![CDATA[Factor to extend the period selected above. Only values greater than 0 will be regarded. Too large values will be reduced internally. Example:<br>“Actual Week” and “4” result in a period of 4 weeks.]]></item>
+    
+            <item name="wcf.acp.box.uzposts.condition.period.alltime"><![CDATA[Without Limit]]></item>
+            <item name="wcf.acp.box.uzposts.condition.period.curday"><![CDATA[Actual Day]]></item>
+            <item name="wcf.acp.box.uzposts.condition.period.curweek"><![CDATA[Actual Week]]></item>
+            <item name="wcf.acp.box.uzposts.condition.period.curmonth"><![CDATA[Actual Month]]></item>
+            <item name="wcf.acp.box.uzposts.condition.period.curyear"><![CDATA[Actual Year]]></item>
+            <item name="wcf.acp.box.uzposts.condition.period.day"><![CDATA[Last Day]]></item>
+            <item name="wcf.acp.box.uzposts.condition.period.week"><![CDATA[Last Week]]></item>
+            <item name="wcf.acp.box.uzposts.condition.period.month"><![CDATA[Last Month]]></item>
+            <item name="wcf.acp.box.uzposts.condition.period.year"><![CDATA[Last Year]]></item>
+    
+        </category>
+    
+        <category name="wcf.user">
+            <item name="wcf.user.uzboxPosts.last"><![CDATA[Last Period]]></item>
+            <item name="wcf.user.uzboxPosts.posts"><![CDATA[{#$boxUser['posts']} Post{if $boxUser['posts'] != 1}s{/if}]]></item>
+        </category>
+    </import>
 </language>

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<data xmlns="http://www.woltlab.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.woltlab.com http://www.woltlab.com/XSD/2019/objectType.xsd">
+<data xmlns="http://www.woltlab.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.woltlab.com https://www.woltlab.com/XSD/6.0/objectType.xsd">
     <import>
         <!-- box controller -->
         <type>
@@ -31,6 +31,7 @@
             <definitionname>com.uz.box.posts.condition</definitionname>
             <classname>wbb\system\condition\UzBoxPostsPeriodCondition</classname>
         </type>
+
         <type>
             <name>com.uz.box.posts.period.value</name>
             <definitionname>com.uz.box.posts.condition</definitionname>
@@ -48,11 +49,13 @@
             <definitionname>com.uz.box.posts.condition</definitionname>
             <classname>wbb\system\condition\UzBoxPostsLastActivityCondition</classname>
         </type>
+
          <type>
             <name>com.uz.box.posts.userState</name>
             <definitionname>com.uz.box.posts.condition</definitionname>
             <classname>wcf\system\condition\UserStateCondition</classname>
         </type>
+
         <type>
             <name>com.uz.box.posts.groups</name>
             <definitionname>com.uz.box.posts.condition</definitionname>
