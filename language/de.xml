@@ -29,7 +29,7 @@
     
         <category name="wcf.user">
             <item name="wcf.user.uzboxPosts.last"><![CDATA[Letzter Zeitraum]]></item>
-            <item name="wcf.user.uzboxPosts.posts"><![CDATA[{#$boxUser->uzboxPosts} {if $boxUser->uzboxPosts != 1}Beiträge{else}Beitrag{/if}]]></item>
+            <item name="wcf.user.uzboxPosts.posts"><![CDATA[{#$boxUser['posts']} {if $boxUser['posts'] != 1}Beiträge{else}Beitrag{/if}]]></item>
         </category>
     </import>
 </language>

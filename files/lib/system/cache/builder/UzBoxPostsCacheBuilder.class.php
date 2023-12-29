@@ -281,8 +281,10 @@ class UzBoxPostsCacheBuilder extends AbstractCacheBuilder
         if (!empty($userIDs)) {
             foreach ($userIDs as $userID) {
                 $user = UserProfileRuntimeCache::getInstance()->getObject($userID);
-                $user->uzboxPosts = $userToPost[$user->userID];
-                $users[] = $user;
+                $users[] = [
+                    'user' => $user,
+                    'posts' => $userToPost[$user->userID],
+                ];
             }
         }
 
@@ -313,8 +315,10 @@ class UzBoxPostsCacheBuilder extends AbstractCacheBuilder
             if (!empty($userIDs)) {
                 foreach ($userIDs as $userID) {
                     $user = new UserProfile(new User($userID));
-                    $user->uzboxPosts = $userToPost[$user->userID];
-                    $lasts[] = $user;
+                    $lasts[] = [
+                        'user' => $user,
+                        'posts' => $userToPost[$user->userID],
+                    ];
                 }
             }
         }
