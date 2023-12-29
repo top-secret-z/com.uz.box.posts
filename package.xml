@@ -53,6 +53,8 @@
     </instructions>
 
     <instructions type="update" fromversion="5.5.*">
-        <void />
+        <instruction type="file" application="wbb" />
+        <instruction type="template" application="wbb" />
+        <instruction type="language" />
     </instructions>
 </package>
